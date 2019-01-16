@@ -8,14 +8,13 @@ import About from "./about/index.jsx";
 class App extends React.Component {
   render() {
     return (
-      <div>
-        
+      <React.Fragment>
         <Header/>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
         </Switch>
-      </div>
+      </React.Fragment>
     );
   }
 }

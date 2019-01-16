@@ -1,9 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
+export class Home extends React.Component {
 
-const Home = props => <div className="form-wrap">this is home1</div>;
-
-// export default Home;
+  render() {
+    return (
+      <div className="home">
+        this is about
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = store => ({
   rootInitData: store
