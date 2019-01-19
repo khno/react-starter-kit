@@ -1,0 +1,138 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  outline: 0;
+  // opacity: 0;
+
+  // display: none;
+  // overflow: hidden;
+
+  // position: fixed;
+  // width: 80%;
+  // height: 200px;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // bottom: 0;
+  // margin: auto;
+  // border-radius: 5px;
+  // background: #fff;
+  // overflow: hidden;
+  // z-index: 1050;
+  // box-shadow: inset 0 0 1px 0 #000;
+  transition: opacity 0.15s linear;
+  &:before {
+    // display: block;
+    // height: calc(100vh - (0.5rem * 2));
+    // content: "";
+  }
+  .modal-dialog {
+    transform: translate(0, 0);
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: calc(100% - (0.5rem * 2));
+    position: relative;
+    width: auto;
+    margin: .5rem;
+    pointer-events: none;
+  }
+  .modal-content{
+    position: relative;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .3rem;
+    outline: 0;
+  }
+}
+
+.modal-enter {
+  transform: scale(0);
+}
+
+.modal-enter-active {
+  transform: scale(1.1);
+  transition: all 0.2s linear;
+}
+
+.modal-enter-end {
+  transform: scale(1);
+  transition: all 0.1s linear;
+}
+
+.modal-leave {
+  transform: scale(1);
+}
+
+.modal-leave-active {
+  transform: scale(1.1);
+  transition: all 0.1s linear;
+}
+
+.modal-leave-end {
+  transform: scale(0);
+  transition: all 0.2s linear;
+}
+
+.modal-title {
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100px;
+  padding: 0 10px;
+}
+
+.modal-operator {
+  width: 100%;
+  height: 50px;
+}
+
+.modal-operator-close,
+.modal-operator-confirm {
+  width: 50%;
+  border: none;
+  outline: none;
+  height: 50px;
+  line-height: 50px;
+  opacity: 1;
+  color: #fff;
+  background: rgb(247, 32, 32);
+  cursor: pointer;
+}
+
+.modal-operator-close:active,
+.modal-operator-confirm:active {
+  opacity: 0.6;
+  transition: opacity 0.15s linear;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  opacity: 0.6;
+  z-index: 9998;
+}
