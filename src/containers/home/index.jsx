@@ -1,8 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import ReactPullLoad, { STATS } from "react-pullload";
-import Modal from "../../components/Modal/index.jsx";
-// import ReactPullLoad, { STATS } from "../../utils/pulltoload";
 
 import axios from "axios";
 import "./index.less";
@@ -45,7 +43,6 @@ export class Home extends React.Component {
 
   handleAction = action => {
     console.info(action, this.state.action, action === this.state.action);
-    //new action must do not equel to old action
     if (!this.state.hasMore) {
       return false;
     }

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./index.less";
-import Button from "@material-ui/core/Button";
 
 const Header = props => {
   const { showModal } = props;
@@ -12,7 +11,7 @@ const Header = props => {
           <i className="iconfont">&#xe64b;</i>
         </div>
         <div className="header-login">
-          <Button onClick={() => showModal()}>登录</Button>
+          <button onClick={showModal}>登录</button>
         </div>
       </nav>
       {/*       
