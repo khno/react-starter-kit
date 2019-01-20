@@ -75,6 +75,15 @@ export class Home extends React.Component {
     this.fetchList({ page: ++this.state.page }, false);
   };
 
+  toDetails = id => {
+    console.log(id, this.props);
+    const { history } = this.props;
+    history.push({
+      pathname: "/details",
+      search: `?id=${id}`
+    });
+  };
+
   render() {
     const { data, hasMore, visible } = this.state;
 
@@ -98,7 +107,11 @@ export class Home extends React.Component {
           <ul className="list-wrap">
             {data.map((item, index) => {
               return (
-                <li className="article-item" key={index}>
+                <li
+                  className="article-item"
+                  key={index}
+                  onClick={() => this.toDetails(item.id)}
+                >
                   <h4>{item.title}</h4>
                   <div className="content">
                     <img src="" alt="" />
