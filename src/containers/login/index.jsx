@@ -66,7 +66,7 @@ class Login extends Component {
           className={`${visible ? "modal fade show" : "modal fade"}`}
           style={divStyle}
         >
-          <div className="modal-backdrop" onClick={this.handleCancel} />
+          <div className="modal-backdrop"/>
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">

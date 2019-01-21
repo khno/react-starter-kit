@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ReactPullLoad, { STATS } from "react-pullload";
-
 import axios from "axios";
 import "./index.less";
 
@@ -75,14 +75,14 @@ export class Home extends React.Component {
     this.fetchList({ page: ++this.state.page }, false);
   };
 
-  toDetails = id => {
-    console.log(id, this.props);
-    const { history } = this.props;
-    history.push({
-      pathname: "/details",
-      search: `?id=${id}`
-    });
-  };
+  // toDetails = id => {
+  //   console.log(id, this.props);
+  //   const { history } = this.props;
+  //   history.push({
+  //     pathname: `/details?id=${id}`,
+  //     search: `?id=${id}`
+  //   });
+  // };
 
   render() {
     const { data, hasMore, visible } = this.state;
@@ -104,27 +104,26 @@ export class Home extends React.Component {
           hasMore={hasMore}
           style={{ paddingTop: 95 }}
         >
-          <ul className="list-wrap">
-            {data.map((item, index) => {
-              return (
-                <li
-                  className="article-item"
-                  key={index}
-                  onClick={() => this.toDetails(item.id)}
-                >
-                  <h4>{item.title}</h4>
-                  <div className="content">
-                    <img src="" alt="" />
-                    <p>{item.content}</p>
-                  </div>
-                  <p className="item-footer">
-                    {item.name} 的创作 {item.num}个赞
-                  </p>
-                </li>
-              );
-            })}
-            {!hasMore && <div className="bottom-tips">人家是有底线的...</div>}
-          </ul>
+          {data.map((item, index) => {
+            return (
+              <Link
+                className="article-item"
+                key={index}
+                to={`/details/${item.id}`}
+                // onClick={() => this.toDetails(item.id)}
+              >
+                <h4>{item.title}</h4>
+                <div className="content">
+                  <img src="" alt="" />
+                  <p>{item.content}</p>
+                </div>
+                <p className="item-footer">
+                  {item.name} 的创作 {item.num}个赞
+                </p>
+              </Link>
+            );
+          })}
+          {!hasMore && <div className="bottom-tips">人家是有底线的...</div>}
         </ReactPullLoad>
       </div>
     );
