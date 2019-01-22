@@ -1,29 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import ModalContainer from "./ModalContainer.js";
+import { signinUser } from "../../actions/index.js";
 import "./index.less";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
       userName: "",
       password: ""
     };
   }
-
-  componentDidMount() {
-    this.setState({ visible: this.props.visible });
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({ visible: props.visible });
-  }
-
-  // 关闭弹窗
-  handleCancel = () => {
-    this.setState({ visible: false });
-  };
 
   // 表单 onchange 事件
   handleChange = event => {
@@ -43,6 +32,7 @@ class Login extends Component {
   // 表单提交
   toLogin = () => {
     const { userName, password } = this.state;
+    // 模拟后端验证账号密码
     if (userName === "" || userName !== "admin") {
       alert("请输入正确账号！");
       return;
@@ -51,12 +41,12 @@ class Login extends Component {
       return;
     }
 
-    console.log("登录", this.state.userName, this.state.password);
+    this.props.signinUser({ userName, password });
+    this.props.handleCancel(); // 关闭弹窗
   };
 
   render() {
-    const { visible } = this.state;
-    // const { children } = this.props;
+    const { visible, handleCancel } = this.props;
     const divStyle = {
       zIndex: visible ? "1" : "-1"
     };
@@ -66,11 +56,11 @@ class Login extends Component {
           className={`${visible ? "modal fade show" : "modal fade"}`}
           style={divStyle}
         >
-          <div className="modal-backdrop"/>
+          <div className="modal-backdrop" />
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <i onClick={this.handleCancel} className="iconfont">
+                <i onClick={handleCancel} className="iconfont">
                   &#xe85c;
                 </i>
                 <h4 className="modal-title">登录</h4>
@@ -104,4 +94,30 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+// export default Login;
+
+const mapStateToProps = state => ({
+  authenticated: state.auth.authenticated,
+  errorMessage: state.auth.error
+});
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      signinUser
+    },
+    dispatch
+  );
+};
+
+// function mapStateToProps(state) {
+//   return {
+//     authenticated: state.auth.authenticated,
+//     errorMessage: state.auth.error
+//   }
+// }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

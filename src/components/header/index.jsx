@@ -1,28 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import "./index.less";
 
 const Header = props => {
-  const { showModal } = props;
+  const { handleOpen, authenticated } = props;
+
   return (
     <header>
       <nav className="header-title">
         <div className="header-logo">
-          <i className="iconfont">&#xe64b;</i>
+          <Link to="/">
+            <i className="iconfont">&#xe64b;</i>
+          </Link>
         </div>
-        <div className="header-login">
-          <button onClick={showModal}>登录</button>
-        </div>
+        {authenticated ? (
+          <Link to="/mine" className="mine">
+            <img
+              src="https://img.souche.com/20161230/png/8bb4f0fd45ed6ae26533eadd85f0f7ea.png"
+              alt=""
+            />
+          </Link>
+        ) : (
+          <div className="header-login">
+            <button onClick={handleOpen}>登录</button>
+          </div>
+        )}
       </nav>
-      {/*       
-    <li>
-      <Link to="/">Netflix</Link>
-    </li>
-    <li>
-      <Link to="/about">Zillow Group</Link>
-    </li> */}
     </header>
   );
 };
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    authenticated: state.auth.authenticated
+  };
+}
+
+export default connect(mapStateToProps)(Header);
