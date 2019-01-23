@@ -36,12 +36,14 @@ class Login extends Component {
     if (userName === "" || userName !== "admin") {
       alert("请输入正确账号！");
       return;
-    } else if (password === "" || password !== "admin") {
+    } else if (password === "" || password !== "123456") {
       alert("请输入正确的密码！");
       return;
     }
 
-    this.props.signinUser({ userName, password });
+    this.props.signinUser({ userName, password }).then(res=>{
+      console.log(res, 8)
+    });
     this.props.handleCancel(); // 关闭弹窗
   };
 
@@ -74,7 +76,7 @@ class Login extends Component {
                 />
                 <input
                   type="password"
-                  placeholder="请输入：admin"
+                  placeholder="请输入密码：123456"
                   onChange={this.handleChange}
                 />
                 <input
@@ -94,7 +96,6 @@ class Login extends Component {
     );
   }
 }
-// export default Login;
 
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
@@ -109,13 +110,6 @@ const mapDispatchToProps = dispatch => {
     dispatch
   );
 };
-
-// function mapStateToProps(state) {
-//   return {
-//     authenticated: state.auth.authenticated,
-//     errorMessage: state.auth.error
-//   }
-// }
 
 export default connect(
   mapStateToProps,

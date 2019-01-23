@@ -37,7 +37,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
-          <Route path="/details" component={Details} />
+          <Route path="/details/:id" component={Details} />
         </Switch>
 
         <Login visible={visible} handleCancel={this.handleCancel} />
