@@ -1,21 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { render } from "react-dom";
 import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import App from "./containers/App.jsx";
-
-
 import configureStore from "./store/configureStore";
-
-// import { createStore } from "redux";
-// import reducers from "./reducers/index.js";
 import { AUTH_USER } from "./actions/types";
-
+import App from "./containers/App.jsx";
 import "./styles/index.less";
 
-
 const store = configureStore();
-
 
 const token = localStorage.getItem("token");
 if (token) {

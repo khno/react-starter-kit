@@ -75,14 +75,14 @@ export class Home extends React.Component {
     this.fetchList({ page: ++this.state.page }, false);
   };
 
-  // toDetails = id => {
-  //   console.log(id, this.props);
-  //   const { history } = this.props;
-  //   history.push({
-  //     pathname: `/details?id=${id}`,
-  //     search: `?id=${id}`
-  //   });
-  // };
+  toDetails = id => {
+    console.log(id, this.props);
+    // const { history } = this.props;
+    // history.push({
+    //   pathname: `/details?id=${id}`,
+    //   search: `?id=${id}`
+    // });
+  };
 
   render() {
     const { data, hasMore, visible } = this.state;
@@ -106,11 +106,11 @@ export class Home extends React.Component {
         >
           {data.map((item, index) => {
             return (
-              <Link
+              <a
                 className="article-item"
                 key={index}
-                to={`/details/${item.id}`}
-                // onClick={() => this.toDetails(item.id)}
+                // to={`/details/${item.id}`}
+                onClick={() => this.toDetails(item.id)}
               >
                 <h4>{item.title}</h4>
                 <div className="content">
@@ -120,7 +120,7 @@ export class Home extends React.Component {
                 <p className="item-footer">
                   {item.name} 的创作 {item.num}个赞
                 </p>
-              </Link>
+              </a>
             );
           })}
           {!hasMore && <div className="bottom-tips">人家是有底线的...</div>}
@@ -130,8 +130,9 @@ export class Home extends React.Component {
   }
 }
 
-const mapStateToProps = store => ({
-  rootInitData: store
+const mapStateToProps = state => ({
+  // rootInitData: state,
+  authenticated: state.auth.authenticated
 });
 
 export default connect(

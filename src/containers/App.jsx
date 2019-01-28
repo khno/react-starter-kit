@@ -10,12 +10,12 @@ import Login from "./login/index.jsx";
 import Details from "./details/index.jsx";
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      visible: false
-    };
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     visible: false
+  //   };
+  // }
 
   // 展示弹窗
   handleOpen = () => {
@@ -28,11 +28,12 @@ class App extends React.Component {
   };
 
   render() {
-    const { visible } = this.state;
+    // const { visible } = this.state;
 
     return (
       <React.Fragment>
-        <Header handleOpen={this.handleOpen} />
+        {/* <Header handleOpen={this.handleOpen} /> */}
+        <Header />
 
         <Switch>
           <Route exact path="/" component={Home} />
@@ -40,7 +41,7 @@ class App extends React.Component {
           <Route path="/details/:id" component={Details} />
         </Switch>
 
-        <Login visible={visible} handleCancel={this.handleCancel} />
+        <Login />
       </React.Fragment>
     );
   }

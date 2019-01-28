@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Link } from "react-router-dom";
+import { loginModalShow } from "../../actions/index";
 import "./index.less";
 
 const Header = props => {
-  const { handleOpen, authenticated } = props;
-
+  const { loginModalShow, authenticated } = props;
+  console.log(props, 8)
   return (
     <header>
       <nav className="header-title">
@@ -23,7 +25,7 @@ const Header = props => {
           </Link>
         ) : (
           <div className="header-login">
-            <button onClick={handleOpen}>登录</button>
+            <button onClick={loginModalShow}>登录</button>
           </div>
         )}
       </nav>
@@ -31,10 +33,20 @@ const Header = props => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    authenticated: state.auth.authenticated
-  };
-}
+const mapStateToProps = state => ({
+  authenticated: state.auth.authenticated
+});
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      loginModalShow
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

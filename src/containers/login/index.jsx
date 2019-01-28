@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import ModalContainer from "./ModalContainer.js";
-import { signinUser } from "../../actions/index.js";
+import ModalContainer from "./ModalContainer";
+import { signinUser, loginModalhide } from "../../actions/index";
 import "./index.less";
 
 class Login extends Component {
@@ -32,6 +32,7 @@ class Login extends Component {
   // 表单提交
   toLogin = () => {
     const { userName, password } = this.state;
+
     // 模拟后端验证账号密码
     if (userName === "" || userName !== "admin") {
       alert("请输入正确账号！");
@@ -41,14 +42,23 @@ class Login extends Component {
       return;
     }
 
-    this.props.signinUser({ userName, password }).then(res=>{
-      console.log(res, 8)
-    });
-    this.props.handleCancel(); // 关闭弹窗
+    this.props
+      .signinUser({ userName, password })
+      .then(res => {
+        // 接口请求成功，关闭弹窗
+        if (res.success) {
+          this.props.handleCancel();
+        }
+      })
+      .catch(err => {
+        // 接口报错处理
+        console.log(err);
+      });
   };
 
   render() {
-    const { visible, handleCancel } = this.props;
+    const { handleCancel, isLoginModalShow, loginModalhide } = this.props;
+    const { visible } = isLoginModalShow;
     const divStyle = {
       zIndex: visible ? "1" : "-1"
     };
@@ -62,7 +72,7 @@ class Login extends Component {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <i onClick={handleCancel} className="iconfont">
+                <i onClick={loginModalhide} className="iconfont">
                   &#xe85c;
                 </i>
                 <h4 className="modal-title">登录</h4>
@@ -99,13 +109,15 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   authenticated: state.auth.authenticated,
-  errorMessage: state.auth.error
+  errorMessage: state.auth.error,
+  isLoginModalShow: state.isLoginModalShow
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      signinUser
+      signinUser,
+      loginModalhide
     },
     dispatch
   );

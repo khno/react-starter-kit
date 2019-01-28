@@ -1,5 +1,10 @@
 import axios from "axios";
-import { AUTH_USER, USER_INFO } from "./types";
+import {
+  AUTH_USER,
+  USER_INFO,
+  LOGIN_MODAL_SHOW,
+  LOGIN_MODAL_HIDE
+} from "./types";
 const ROOT_URL = "https://www.easy-mock.com/mock/590766877a878d73716e4067/mock";
 
 // 登录
@@ -44,3 +49,13 @@ export function signoutUser() {
     type: UNAUTH_USER
   };
 }
+
+// 登录模态框展示
+export const loginModalShow = () => dispatch => {
+  dispatch({ type: LOGIN_MODAL_SHOW });
+};
+
+// 登录模态框关闭
+export const loginModalhide = () => dispatch => {
+  dispatch({ type: LOGIN_MODAL_HIDE });
+};
