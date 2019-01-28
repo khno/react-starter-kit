@@ -7,7 +7,6 @@ import "./index.less";
 
 const Header = props => {
   const { loginModalShow, authenticated } = props;
-  console.log(props, 8)
   return (
     <header>
       <nav className="header-title">

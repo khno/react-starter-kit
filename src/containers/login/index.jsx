@@ -32,6 +32,7 @@ class Login extends Component {
   // 表单提交
   toLogin = () => {
     const { userName, password } = this.state;
+    const { signinUser, loginModalhide } = this.props;
 
     // 模拟后端验证账号密码
     if (userName === "" || userName !== "admin") {
@@ -42,12 +43,11 @@ class Login extends Component {
       return;
     }
 
-    this.props
-      .signinUser({ userName, password })
+    signinUser({ userName, password })
       .then(res => {
         // 接口请求成功，关闭弹窗
         if (res.success) {
-          this.props.handleCancel();
+          loginModalhide();
         }
       })
       .catch(err => {
@@ -57,7 +57,7 @@ class Login extends Component {
   };
 
   render() {
-    const { handleCancel, isLoginModalShow, loginModalhide } = this.props;
+    const { isLoginModalShow, loginModalhide } = this.props;
     const { visible } = isLoginModalShow;
     const divStyle = {
       zIndex: visible ? "1" : "-1"
@@ -78,7 +78,6 @@ class Login extends Component {
                 <h4 className="modal-title">登录</h4>
               </div>
               <div className="modal-body">
-                {/* <form action=""> */}
                 <input
                   type="text"
                   placeholder="请输入账号：admin"
@@ -95,7 +94,6 @@ class Login extends Component {
                   value="登录"
                   onClick={this.toLogin}
                 />
-                {/* </form> */}
                 <a href="">忘记密码？</a>
                 <p className="login-tips">登录即表示您同意《用户协议》</p>
               </div>
@@ -108,8 +106,6 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-  authenticated: state.auth.authenticated,
-  errorMessage: state.auth.error,
   isLoginModalShow: state.isLoginModalShow
 });
 

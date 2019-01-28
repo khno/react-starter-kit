@@ -3,7 +3,6 @@ import {
   UNAUTH_USER,
   AUTH_ERROR,
   FETCH_MESSAGE,
-  USER_INFO,
   LOGIN_MODAL_SHOW,
   LOGIN_MODAL_HIDE
 } from "../actions/types";
@@ -18,15 +17,6 @@ export function authReducer(state = {}, action) {
       return { ...state, error: action.payload };
     case FETCH_MESSAGE:
       return { ...state, message: action.payload };
-    default:
-      return state;
-  }
-}
-
-export function userInfoReducer(state = {}, action) {
-  switch (action.type) {
-    case USER_INFO:
-      return Object.assign({}, state, action.payload);
     default:
       return state;
   }

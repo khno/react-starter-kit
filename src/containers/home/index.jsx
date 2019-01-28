@@ -65,8 +65,9 @@ export class Home extends React.Component {
       const { history } = this.props;
       history.push({
         pathname: `/details?id=${id}`,
-        search: `?id=${id}`
+        // search: `?id=${id}`
       });
+      // window.location.hash="/details"
     } else {
       loginModalShow();
     }
@@ -93,7 +94,7 @@ export class Home extends React.Component {
             </button>
           ))}
         </div>
-        <div>
+        <div className="list-warp">
           {data.map((item, index) => {
             return (
               <a

@@ -1,10 +1,11 @@
 import axios from "axios";
 import {
   AUTH_USER,
-  USER_INFO,
+  UNAUTH_USER,
   LOGIN_MODAL_SHOW,
   LOGIN_MODAL_HIDE
 } from "./types";
+
 const ROOT_URL = "https://www.easy-mock.com/mock/590766877a878d73716e4067/mock";
 
 // 登录
@@ -22,8 +23,6 @@ export const signinUser = ({ userName, password }) => dispatch => {
           localStorage.setItem("token", data.result.token);
           // 更新 store 中的值，用户有权限
           dispatch({ type: AUTH_USER });
-          // 更新 sotre 中当前用户信息
-          dispatch({ type: USER_INFO, payload: data.result });
           resolve(data || { success: "ok" });
         }
       })
@@ -35,20 +34,14 @@ export const signinUser = ({ userName, password }) => dispatch => {
   });
 };
 
-export function authError(error) {
-  return {
-    type: AUTH_ERROR,
-    payload: error
-  };
-}
-
 // 登出
-export function signoutUser() {
-  localStorage.removeItem("token");
-  return {
-    type: UNAUTH_USER
-  };
-}
+export const signoutUser = () => dispatch => {
+  return new Promise(resolve => {
+    localStorage.removeItem("token");
+    dispatch({ type: UNAUTH_USER });
+    resolve();
+  });
+};
 
 // 登录模态框展示
 export const loginModalShow = () => dispatch => {

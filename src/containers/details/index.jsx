@@ -7,9 +7,11 @@ class Details extends React.Component {
   constructor() {
     super();
     this.state = {};
+    console.log(1111)
   }
 
   componentDidMount() {
+    
     const { id } = this.props.match.params;
     axios({
       url: `https://www.easy-mock.com/mock/590766877a878d73716e4067/mock/details/${id}`
@@ -82,16 +84,4 @@ const mapStateToProps = state => ({
   errorMessage: state.auth.error
 });
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      // signinUser
-    },
-    dispatch
-  );
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Details);
+export default Details
