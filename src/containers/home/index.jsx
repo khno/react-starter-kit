@@ -1,9 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import ReactPullLoad, { STATS } from "react-pullload";
+import { bindActionCreators } from "redux";
+import { loginModalShow } from "../../actions/index";
 import axios from "axios";
 import "./index.less";
+
+const toperMenu = ["推荐", "生活", "科技"];
 
 export class Home extends React.Component {
   constructor() {
@@ -11,7 +13,7 @@ export class Home extends React.Component {
     this.state = {
       data: [],
       hasMore: true,
-      action: STATS.init
+      active: 0
     };
   }
 
@@ -41,75 +43,62 @@ export class Home extends React.Component {
     });
   };
 
-  handleAction = action => {
-    console.info(action, this.state.action, action === this.state.action);
-    if (!this.state.hasMore) {
-      return false;
-    }
-    this.handLoadMore();
-
-    // if (action === STATS.refreshing) {
-    //   //刷新
-    //   this.handRefreshing();
-    // } else if (action === STATS.loading) {
-    //   console.log(1)
-    //   //加载更多
-    // } else {
-    //   //DO NOT modify below code
-    //   this.setState({
-    //     action: action
-    //   });
-    // }
-  };
-
   // 下拉刷新
-  handRefreshing = () => {
-    let isRefresh = true;
-    this.fetchList({ page: 1 }, isRefresh);
-  };
+  // handleAction = () => {
+  //   this.fetchList({ type: this.state.active, page: 1 }, false);
+  // };
 
+  // 上拉加载更多
   handLoadMore = () => {
-    if (!this.state.hasMore) {
+    const { hasMore, active } = this.state;
+    // hasMore 为假表示没有下一页数据
+    if (!hasMore) {
       return false;
     }
-    this.fetchList({ page: ++this.state.page }, false);
+    this.fetchList({ type: active, page: ++this.state.page }, false);
   };
 
+  // 详情页跳转，没有登录需要去先去登录
   toDetails = id => {
-    console.log(id, this.props);
-    // const { history } = this.props;
-    // history.push({
-    //   pathname: `/details?id=${id}`,
-    //   search: `?id=${id}`
-    // });
+    const { authenticated, loginModalShow } = this.props;
+    if (authenticated) {
+      const { history } = this.props;
+      history.push({
+        pathname: `/details?id=${id}`,
+        search: `?id=${id}`
+      });
+    } else {
+      loginModalShow();
+    }
+  };
+
+  // 顶部菜单切换，根据向后端传参 type 来调用不同类型的列表，如：type:1 为【生活】
+  handleSwitch = active => {
+    this.setState({ active });
+    this.fetchList({ type: active, page: 1 }, false);
   };
 
   render() {
-    const { data, hasMore, visible } = this.state;
-
+    const { data, hasMore, active } = this.state;
     return (
       <div className="home">
         <div className="fix-header-nav">
-          <button className="active" onClick={this.handRefreshing}>
-            推荐
-          </button>
-          <button onClick={this.handRefreshing}>生活</button>
-          <button onClick={this.handRefreshing}>科技</button>
+          {toperMenu.map((menu, index) => (
+            <button
+              className={active === index ? "active" : ""}
+              key={index}
+              onClick={() => this.handleSwitch(index)}
+            >
+              {menu}
+            </button>
+          ))}
         </div>
-        <ReactPullLoad
-          action={this.state.action}
-          handleAction={this.handleAction} // 满足下拉加载更多的回调函数
-          downEnough={150} // 满足下拉刷新的距离
-          distanceBottom={100} // 距离底部距离触发加载更多 默认值为100像素
-          hasMore={hasMore}
-          style={{ paddingTop: 95 }}
-        >
+        <div>
           {data.map((item, index) => {
             return (
               <a
                 className="article-item"
                 key={index}
-                // to={`/details/${item.id}`}
                 onClick={() => this.toDetails(item.id)}
               >
                 <h4>{item.title}</h4>
@@ -123,19 +112,27 @@ export class Home extends React.Component {
               </a>
             );
           })}
-          {!hasMore && <div className="bottom-tips">人家是有底线的...</div>}
-        </ReactPullLoad>
+        </div>
+        {!hasMore && <div className="bottom-tips">人家是有底线的...</div>}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  // rootInitData: state,
   authenticated: state.auth.authenticated
 });
 
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      loginModalShow
+    },
+    dispatch
+  );
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Home);
