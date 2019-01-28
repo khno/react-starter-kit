@@ -32,7 +32,7 @@ export class Home extends React.Component {
     }).then(res => {
       const { result, success } = res.data;
       if (success) {
-        // removeLoading();
+        removeLoading();
         let data;
         if (isRefresh) {
           data = result.data;
