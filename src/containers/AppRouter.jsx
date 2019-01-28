@@ -7,23 +7,23 @@ import Details from "./details/index.jsx";
 import Mine from "./mine/index.jsx";
 import Login from "./login/index.jsx";
 
-class App extends React.Component {
+class AppRouter extends React.Component {
   render() {
     return (
       <React.Fragment>
+        {/* 公用头 */}
         <Header />
-
+        {/* 公用登录模态框 */}
+        <Login />
+        {/* 路由配置 */}
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/mine" component={Mine} />
-          {/* <Route path="/details" component={Details} /> */}
+          <Route exact path="/mine" component={Mine} />
           <Route exact path="/details/:id" component={Details} />
         </Switch>
-
-        <Login />
       </React.Fragment>
     );
   }
 }
 
-export default App;
+export default AppRouter;

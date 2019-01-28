@@ -4,7 +4,7 @@ import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
 import { AUTH_USER } from "./actions/types";
-import App from "./containers/App.jsx";
+import AppRouter from "./containers/AppRouter.jsx";
 import "./styles/index.less";
 
 const store = configureStore();
@@ -17,7 +17,7 @@ if (token) {
 render(
   <HashRouter>
     <Provider store={store}>
-      <App />
+      <AppRouter />
     </Provider>
   </HashRouter>,
   document.getElementById("app")

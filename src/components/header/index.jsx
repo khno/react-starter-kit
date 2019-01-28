@@ -10,11 +10,13 @@ const Header = props => {
   return (
     <header>
       <nav className="header-title">
+        {/* logo */}
         <div className="header-logo">
           <Link to="/">
             <i className="iconfont">&#xe64b;</i>
           </Link>
         </div>
+        {/* 根据是否登录的标记展示头像 或 登录按钮 */}
         {authenticated ? (
           <Link to="/mine" className="mine">
             <img
