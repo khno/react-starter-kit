@@ -31,7 +31,25 @@ class Mine extends React.Component {
           </div>
         </div>
         <a href="javascript:void(0);" className="row-item">
+          <div className="item-name">我的发布</div>
+          <span className="fr">
+            <i className="iconfont">&#xe602;</i>
+          </span>
+        </a>
+        <a href="javascript:void(0);" className="row-item">
           <div className="item-name">我的收藏</div>
+          <span className="fr">
+            <i className="iconfont">&#xe602;</i>
+          </span>
+        </a>
+        <a href="javascript:void(0);" className="row-item">
+          <div className="item-name">我的点赞</div>
+          <span className="fr">
+            <i className="iconfont">&#xe602;</i>
+          </span>
+        </a>
+        <a href="javascript:void(0);" className="row-item mt15">
+          <div className="item-name">设置</div>
           <span className="fr">
             <i className="iconfont">&#xe602;</i>
           </span>
@@ -39,12 +57,9 @@ class Mine extends React.Component {
         <a
           onClick={this.signoutUser}
           href="javascript:void(0);"
-          className="row-item"
+          className="row-item mt15"
         >
           <div className="item-name">退出登录</div>
-          <span className="fr">
-            <i className="iconfont">&#xe602;</i>
-          </span>
         </a>
       </div>
     );

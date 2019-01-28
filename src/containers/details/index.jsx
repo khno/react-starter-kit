@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { removeLoading, addLoading } from "../../components/Loading/index";
 import "./index.less";
 
 class Details extends React.Component {
@@ -15,11 +16,13 @@ class Details extends React.Component {
   // 根据 id 获取详情
   fetchDetail = () => {
     const { id } = this.props.match.params;
+    addLoading();
     axios({
       url: `https://www.easy-mock.com/mock/590766877a878d73716e4067/mock/details/${id}`
     }).then(res => {
       const { result, success } = res.data;
       if (success) {
+        removeLoading();
         this.setState({
           author: result.author,
           img: result.img,
