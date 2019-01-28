@@ -1,17 +1,19 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 import axios from "axios";
 import "./index.less";
+
 class Details extends React.Component {
   constructor() {
     super();
     this.state = {};
-    console.log(1111)
   }
 
   componentDidMount() {
-    
+    this.fetchDetail();
+  }
+
+  // 根据 id 获取详情
+  fetchDetail = () => {
     const { id } = this.props.match.params;
     axios({
       url: `https://www.easy-mock.com/mock/590766877a878d73716e4067/mock/details/${id}`
@@ -30,9 +32,12 @@ class Details extends React.Component {
         });
       }
     });
-  }
+  };
 
-  toFavorite = () => {};
+  // 点赞功能
+  toFavorite = () => {
+    console.log("点赞！");
+  };
 
   render() {
     const {
@@ -42,8 +47,7 @@ class Details extends React.Component {
       title,
       content,
       readCount,
-      favoriteCount,
-      hasFavorite
+      favoriteCount
     } = this.state;
     return (
       <div className="details">
@@ -74,14 +78,10 @@ class Details extends React.Component {
             </i>
           </div>
         </div>
+        {/* <Route path="/details/:id" component={Topic} /> */}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  authenticated: state.auth.authenticated,
-  errorMessage: state.auth.error
-});
-
-export default Details
+export default Details;
