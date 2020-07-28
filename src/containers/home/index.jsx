@@ -26,26 +26,77 @@ export class Home extends React.Component {
   //  列表数据获取
   fetchList = (params, isRefresh) => {
     addLoading();
-    axios({
-      url: "https://www.easy-mock.com/mock/590766877a878d73716e4067/mock/list",
-      params: params
-    }).then(res => {
-      const { result, success } = res.data;
-      if (success) {
-        removeLoading();
-        let data;
-        if (isRefresh) {
-          data = result.data;
-        } else {
-          data = this.state.data.concat(result.data);
-        }
-        this.setState({
-          data,
-          page: result.page,
-          hasMore: result.hasMore
-        });
-      }
-    });
+    // axios({
+    //   url: "https://www.easy-mock.com/mock/590766877a878d73716e4067/mock/list",
+    //   params: params
+    // }).then(res => {
+    //   const { result, success } = res.data;
+    //   if (success) {
+    //     removeLoading();
+    //     let data;
+    //     if (isRefresh) {
+    //       data = result.data;
+    //     } else {
+    //       data = this.state.data.concat(result.data);
+    //     }
+    //     this.setState({
+    //       data,
+    //       page: result.page,
+    //       hasMore: result.hasMore
+    //     });
+    //   }
+	// });
+	// mock data
+	setTimeout(() => {
+		const res = {
+			"result": {
+			  "data": [
+				{
+				  "id": "1",
+				  "title": "《玩具總動員》",
+				  "content": "《玩具總動員》（英語：Toy Story）是一部於1995年上映的美国计算机动画冒险伙伴（英语：Buddy film）喜剧片，由皮克斯动画工作室制作，华特迪士尼影业发行。该片是 ...",
+				  "wechat_id": "xxiyk",
+				  "name": "華特迪士尼影業‎; ‎皮克斯動畫工作室",
+				  "num": "99"
+				},
+				{
+				  "id": "2",
+				  "title": "《蟲蟲危機》",
+				  "content": "蟲蟲危機（英語：A Bug's Life）是一部3D動畫電影，由皮克斯動畫工作室制作，华特迪士尼以及Buena Vista Distribution在美国于1998年9月14日发布，英国部分 ...",
+				  "wechat_id": "xxiyk",
+				  "name": "‎博伟影片",
+				  "num": "99"
+				},
+				{
+				  "id": "3",
+				  "title": "《怪獸電力公司》",
+				  "content": "《怪兽电力公司》（英語：Monsters, Inc.）是一部2001年的美国计算机动画喜剧片，由皮特·多克特执导，皮克斯动画工作室制作，华特迪士尼影片发行，李·昂克里奇和大卫· ...",
+				  "wechat_id": "xxiyk",
+				  "name": "皮克斯动画工作室",
+				  "num": "99"
+				},
+			  ],
+			  "page": 1,
+			  "hasMore": false
+			},
+			"success": true
+		  }
+		const { result, success } = res;
+		if (success) {
+			removeLoading();
+			let data;
+			if (isRefresh) {
+				data = result.data;
+			} else {
+				data = this.state.data.concat(result.data);
+			}
+			this.setState({
+				data,
+				page: result.page,
+				hasMore: result.hasMore
+			});
+		}
+	}, 500)
   };
 
   // 顶部菜单切换，根据向后端传参 type 来调用不同类型的列表，如：type:1 为【生活】
